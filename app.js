@@ -1,3 +1,9 @@
+// If you dont understand the below two lines of code just ignore it 
+// it onstall a dotenv package to use our defined constants in file config.env
+const dotenv = require("dotenv")
+dotenv.config({ path: "./config/config.env" })
+
+// Focus on code form here
 const express = require("express");
 const app = express();
 const ejs = require("ejs");
@@ -29,5 +35,13 @@ const UserSchema = require("./models/UserModel")
 const UserRoutes = require("./routes/UserRoutes")
 app.use(UserRoutes)
 
-app.listen(5500, () => console.log("Srever is listening to port 5500...?"))
+// if you don't understand the below app.listen because of CONNSTANT are used 
+// Then just comment it and then use the second app.listen with static defined port 6000
+// app.listen(process.env.PORT, () => {
+//     console.log(`Server is port ${process.env.PORT} in ${process.env.NODE_ENV}`)
+// })
 
+// Runnig server with static port 6000 (you can change it if 6000 is not working)
+app.listen(6000, () => {
+    console.log(`Server connected to port 6000...`)
+})

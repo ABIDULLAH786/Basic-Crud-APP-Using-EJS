@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 
-const connectDatabase = () =>{ mongoose.connect("mongodb://localhost:27017/usersdb",
-    { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-        if (err) {
-            console.log("error in creating db");
-            throw err;
+const connectDatabase = () => {
+    mongoose.connect(process.env.DB_LOCAL_STRING,
+        { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+            if (err) {
+                console.log("error in creating db");
+                throw err;
+            }
+            console.log("Connected to MongoDB!!!");
         }
-        console.log("Connected to MongoDB!!!");
-    }
-)}
+    )
+}
 module.exports = connectDatabase;

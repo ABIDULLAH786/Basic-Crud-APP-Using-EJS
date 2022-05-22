@@ -34,7 +34,8 @@ exports.updateUserById = async (req, res) => {
     // Checks if the user has update the image
     if (req.files) {
         const img = req.files.img;
-        await UserSchema.updateOne({ _id: id }, { $set: { name: name, email: email, image: img.name } });
+        //the trim() is used to remove extra spaces from both ends fo string, so we can easily search data next time
+        await UserSchema.updateOne({ _id: id }, { $set: { name:name.trim(), email:email.trim(), image: img.name } });
         
         //move image to public/img directory 
         img.mv("./public/img/" + img.name, async (e) => {
@@ -54,7 +55,6 @@ exports.updateUserById = async (req, res) => {
 
 // load the insert data page
 exports.loadInsert = (req, res) => {
-    console.log("insert calll")
     res.render("insert");
     // res.sendFile(__dirname + '/views/insert.ejs')
 }
@@ -64,8 +64,8 @@ exports.addNewUser = async (req, res) => {
     // console.log("Img Name: ", req.files.img)
     const { name, email } = req.body;
     const file = req.files.img;
-
-    const result = await UserSchema.create({ name, email, image: file.name });
+    
+    const result = await UserSchema.create({ name:name.trim(), email:email.trim(), image: file.name });
 
     file.mv(`./public/img/` + file.name, async (e) => {
         if (e)
@@ -75,3 +75,11 @@ exports.addNewUser = async (req, res) => {
     })
     res.redirect("/");
 }
+
+exports.loadUsersTable = async (req,res)=>{
+    const {name} = req.body;
+    console.log(name)
+    const data = await UserSchema.find({name:name.trim()})
+    
+    res.render("userstable",{data})
+} 
