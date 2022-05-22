@@ -29,5 +29,5 @@ const UserSchema = require("./models/UserModel")
 const UserRoutes = require("./routes/UserRoutes")
 app.use(UserRoutes)
 
-app.listen(9000, () => console.log("Srever is listening to port 9000...?"))
+app.listen(5500, () => console.log("Srever is listening to port 5500...?"))
 
