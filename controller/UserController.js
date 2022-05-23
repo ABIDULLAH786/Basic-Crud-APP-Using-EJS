@@ -1,5 +1,14 @@
 const UserSchema = require("../models/UserModel")
 
+exports.signInPage = (req, res) => {
+    let method = req.params.method;
+    if (method == "login" || method == "signin") {
+        method = "signin"
+    }
+    else
+        method = "signup"
+    res.render("auth", { method })
+}
 exports.getAllUsers = async (req, res) => {
     const data = await UserSchema.find();
     res.render("home", { data: data })
@@ -35,8 +44,8 @@ exports.updateUserById = async (req, res) => {
     if (req.files) {
         const img = req.files.img;
         //the trim() is used to remove extra spaces from both ends fo string, so we can easily search data next time
-        await UserSchema.updateOne({ _id: id }, { $set: { name:name.trim(), email:email.trim(), image: img.name } });
-        
+        await UserSchema.updateOne({ _id: id }, { $set: { name: name.trim(), email: email.trim(), image: img.name } });
+
         //move image to public/img directory 
         img.mv("./public/img/" + img.name, async (e) => {
             if (e)
@@ -64,8 +73,8 @@ exports.addNewUser = async (req, res) => {
     // console.log("Img Name: ", req.files.img)
     const { name, email } = req.body;
     const file = req.files.img;
-    
-    const result = await UserSchema.create({ name:name.trim(), email:email.trim(), image: file.name });
+
+    const result = await UserSchema.create({ name: name.trim(), email: email.trim(), image: file.name });
 
     file.mv(`./public/img/` + file.name, async (e) => {
         if (e)
@@ -76,10 +85,10 @@ exports.addNewUser = async (req, res) => {
     res.redirect("/");
 }
 
-exports.loadUsersTable = async (req,res)=>{
-    const {name} = req.body;
+exports.loadUsersTable = async (req, res) => {
+    const { name } = req.body;
     console.log(name)
-    const data = await UserSchema.find({name:name.trim()})
-    
-    res.render("userstable",{data})
+    const data = await UserSchema.find({ name: name.trim() })
+
+    res.render("userstable", { data })
 } 

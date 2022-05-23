@@ -1,9 +1,11 @@
 const express = require("express")
 const router = express.Router();
-const {getAllUsers, addNewUser, findUserById, loadInsert, loadUsersTable, updateUserById, deletById} = require("../controller/UserController")
-
+const {getAllUsers, addNewUser, findUserById, loadInsert, signInPage, loadUsersTable, updateUserById, deletById} = require("../controller/UserController")
+// auth/:method
+router.route("/auth/:method").get(signInPage);
 router.route("/").get(getAllUsers);
 router.route("/delete/:id").get(deletById);
+router.route("/users").get(getAllUsers);
 router.route("/user/:id").get(findUserById);
 router.route("/insert").get(loadInsert);
 
