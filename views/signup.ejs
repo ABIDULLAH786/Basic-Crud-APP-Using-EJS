@@ -24,11 +24,14 @@
 </head>
 
 <body>
-  <form action="/signin" method="post" class="form-signin">
+  <form action="/signup" method="post" class="form-signin">
     <div class="text-center">
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
     </div>
-
+    <div>
+      <label for="inputName" class="sr-only">Name</label>
+      <input type="text" id="inputName" name="name" class="form-control" placeholder="Name" required autofocus>
+    </div>
     <div>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required
@@ -38,14 +41,9 @@
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
     </div>
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    
+
     <div class="text-center">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
     </div>
   </form>
 </body>

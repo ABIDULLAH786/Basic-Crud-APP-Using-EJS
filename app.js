@@ -31,7 +31,9 @@ const connectDatabse = require("./config/connection")
 connectDatabse();
 
 const UserRoutes = require("./routes/UserRoutes")
+const LogRoutes = require("./routes/LogRoutes")
 app.use(UserRoutes)
+app.use(LogRoutes)
 
 
 

@@ -11,10 +11,19 @@
     "type": "git",
     "url": "https://github.com/ABIDULLAH786/Basic-Crud-APP-Using-EJS.git"
   },
-  "keywords": ["ejs","crud","abidullah786"],
+  "bugs": {
+    "url": "https://github.com/ABIDULLAH786/Basic-Crud-APP-Using-EJS/issues"
+  },
+  "homepage": "https://github.com/ABIDULLAH786/Basic-Crud-APP-Using-EJS#readme",
+  "keywords": [
+    "ejs",
+    "crud",
+    "abidullah786"
+  ],
   "author": "ABIDULLAH786",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
