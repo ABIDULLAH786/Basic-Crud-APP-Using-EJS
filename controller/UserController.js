@@ -9,9 +9,15 @@ exports.signInPage = (req, res) => {
         method = "signup"
     res.render("auth", { method })
 }
+exports.home = async (req, res) => {
+    // const data = await UserSchema.find();
+    res.render("home")
+    // console.log(data)
+    // res.sendFile(__dirname + '/views/form.html')
+}
 exports.getAllUsers = async (req, res) => {
     const data = await UserSchema.find();
-    res.render("home", { data: data })
+    res.render("users", { data: data })
     // console.log(data)
     // res.sendFile(__dirname + '/views/form.html')
 }
@@ -23,7 +29,7 @@ exports.deletById = async (req, res) => {
     const { id } = req.params;
 
     const result = await UserSchema.findByIdAndDelete(id);
-    res.redirect("/")
+    res.redirect("/users")
     // res.sendFile(__dirname + '/views/home.ejs')
 }
 

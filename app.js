@@ -9,8 +9,31 @@ const app = express();
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
+const session = require("express-session");
 
-app.use(express.static(path.join(__dirname,"public")))
+app.use(session({
+
+    secret: "Shh, its a secret!",
+    resave: false,
+    saveUninitialized: false,
+
+}));
+
+global.isCurrentlySignIn = null;
+
+// this route is set just to test the session is working or not
+app.get('/test', function (req, res) {
+
+    if (req.session.page_views) {
+        req.session.page_views++;
+        res.send("You visited this page " + req.session.page_views + " times with session ID:" + req.sessionID);
+    } else {
+        req.session.page_views = 1;
+        res.send("Welcome to this page for the first time!");
+    }
+});
+
+app.use(express.static(path.join(__dirname, "public")))
 
 app.use(express.json());
 app.use(fileUpload());
@@ -31,7 +54,10 @@ const connectDatabse = require("./config/connection")
 connectDatabse();
 
 const UserRoutes = require("./routes/UserRoutes")
-const LogRoutes = require("./routes/LogRoutes")
+const LogRoutes = require("./routes/LogRoutes");
+const setUserLoggedIn = require("./middlewares/setUserLoggedIn");
+// app.use("*",setUserLoggedIn)
+
 app.use(UserRoutes)
 app.use(LogRoutes)
 

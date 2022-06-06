@@ -20,35 +20,10 @@
     <%- include('layout/navbar')%>
     <div class="container">
 
-        <h1>Home </h1>
-
-        <div class="row ">
-            <% for(let i=0; i<data.length; i++){ %>
-                <div class="col-4">
-                    <div class="card">
-                        <div class="card-title text-center">
-                            <h4>
-                                <%=data[i].name%> <br>
-                                    <%=data[i].email%>
-                            </h4>
-                        </div>
-                        <%if(data[i].image){%>
-                            <div class="card-body text-center">
-                                <img src="/img/<%=data[i].image%>" load="lazy" width="200px" alt="img">
-                            </div>
-                            <%}%>
-                                <div class="card-footer d-flex justify-content-around">
-                                    <a href="/delete/<%=data[i]._id%>"> 
-                                        <button class="btn btn-danger">Delete</button>
-                                    </a>
-                                    <a href="/user/<%=data[i]._id%>"> 
-                                        <button class="btn btn-info"> Update</button>
-                                    </a>
-                                </div>
-                    </div>
-                </div>
-                <%}%>
+        <div class="container text-center mt-5">
+            <h1>WELCOM TO BASIC CRUD APPLICATION <br> <b style="color:rgb(255, 102, 0)"><i>USING EJS</i></b></h1>
         </div>
+       
     </div>
 </body>
 

@@ -3,7 +3,7 @@ body {
   height: 100%;
 }
 
-body {
+.form-body {
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;

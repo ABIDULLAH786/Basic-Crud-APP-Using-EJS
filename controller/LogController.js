@@ -1,14 +1,16 @@
 const UserSchema = require("../models/UserModel");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
-async  function checkUser(email, password) {
+async function authenticate(req) {
+    const { email, password } = req.body;
     let errmsg = ""
-    const user = await UserSchema.findOne({ email: email.trim()});
-    if (user.password)
-     {
+    const user = await UserSchema.findOne({ email: email.trim() });
+    if (user) {
         const match = await bcrypt.compare(password, user.password);
         if (match) {
-           return true;
+            req.session.uid = user._id;
+            isCurrentlySignIn = true;
+            return true;
         }
     } else {
         console.log("Please enter a valid name or user name")
@@ -18,51 +20,43 @@ async  function checkUser(email, password) {
 
 }
 exports.Login = async (req, res) => {
-    // let errmsg=""
-    let isfound = await checkUser(req.body.email, req.body.password);
-    if(isfound){
+    let isfound = await authenticate(req);
+    if (isfound) {
+        req.session.isAuth = true;
         res.redirect("/")
     }
     else
         res.redirect("signin")
-    // const {email,password}=req.body
-    // bcrypt.compare(password, 5, function(err, result) {
-    //     if(result)
-    //     {
+}
 
-    //     }
-    // });
-    // const result = await UserSchema.find({email:email.trim(),password:password});
-    // if(result.length>0)
-    // {
-    //     res.redirect("/")
-    // }else{
-    //     console.log("Please enter a valid name or user name")
-    //     errmsg = "Please enter a valid name or user name";
-    //     res.render("signin")
-    // }
-
-    // res.render("home")
+exports.Logout = async (req, res) => {
+    req.session.destroy();
+    res.redirect("/signin");
 }
 exports.Register = async (req, res) => {
     const { name, email, password } = req.body
     console.log(password)
-    const result = await UserSchema.create({ name: name.trim(), email: email.trim(), password: password });
-    console.log(result)
-    if (result) {
-        res.redirect("signin")
-    } else {
-        console.log("Please enter a valid name or user name")
-        errmsg = "Please enter a valid name or user name";
-        // res.render("signup")
+    const findUser = UserSchema.findOne({ email })
+    if (!findUser) {
+        const result = await UserSchema.create({ name: name.trim(), email: email.trim(), password: password });
+        console.log(result)
+        if (result) {
+            res.redirect("signin")
+        } else {
+            console.log("Please enter a valid name or user name")
+            errmsg = "Please enter a valid name or user name";
+            res.render("signup")
+        }
     }
-
+    else {
+        console.log("email already registered")
+        errmsg = "Please enter an unused email";
+        res.render("signup")
+    }
 }
 exports.RegisterPage = async (req, res) => {
-
     res.render("signup")
 }
 exports.LoginPage = async (req, res) => {
     res.render("signin")
-
 }
