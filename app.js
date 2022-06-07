@@ -53,13 +53,13 @@ app.set('view engine', 'ejs');
 const connectDatabse = require("./config/connection")
 connectDatabse();
 
-const UserRoutes = require("./routes/UserRoutes")
-const LogRoutes = require("./routes/LogRoutes");
+const ProductRoutes = require("./routes/ProductRoutes")
+const UserRoutes = require("./routes/UserRoutes");
 const setUserLoggedIn = require("./middlewares/setUserLoggedIn");
 // app.use("*",setUserLoggedIn)
 
+app.use(ProductRoutes)
 app.use(UserRoutes)
-app.use(LogRoutes)
 
 
 
