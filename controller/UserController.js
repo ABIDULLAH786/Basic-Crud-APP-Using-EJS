@@ -31,14 +31,32 @@ exports.Login = async (req, res) => {
 
 exports.Logout = async (req, res) => {
     req.session.destroy();
+    isCurrentlySignIn = false;
     res.redirect("/signin");
 }
 exports.Register = async (req, res) => {
     const { name, email, password } = req.body
     console.log(password)
+
     const findUser = UserSchema.findOne({ email })
-    if (findUser.length !=0 ) {
-        const result = await UserSchema.create({ name: name.trim(), email: email.trim(), password: password });
+    if (findUser.length != 0) {
+
+        const result = await UserSchema.create(
+            {
+                name: name.trim(),
+                email: email.trim(),
+                password: password
+            },
+            (err,result) => {
+                if (err) {
+                    req.flash("data", req.body);
+                    const errors = Object.keys(err.errors).map(
+                        (itm) => err.errors[itm].message
+                    );
+                    req.flash("validationErrors", errors);
+                    return res.redirect("/signup");
+                }
+            });
         console.log(result)
         if (result) {
             res.redirect("signin")
@@ -53,9 +71,20 @@ exports.Register = async (req, res) => {
         errmsg = "Please enter an unused email";
         res.render("signup")
     }
+
 }
 exports.RegisterPage = async (req, res) => {
-    res.render("signup")
+    const data = req.flash("data")[0];
+    let username = "";
+
+    if (data) {
+        username = data.username;
+    }
+
+    res.render("signup", {
+        errors: req.flash("validationErrors"),
+        username,
+    });
 }
 exports.LoginPage = async (req, res) => {
     res.render("signin")

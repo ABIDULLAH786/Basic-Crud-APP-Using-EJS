@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const session = require("express-session");
-
+const flash = require("connect-flash");
 app.use(session({
 
     secret: "Shh, its a secret!",
@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 app.use(express.json());
 app.use(fileUpload());
-
+app.use(flash())
 
 app.use(bodyParser.json());
 app.use(
