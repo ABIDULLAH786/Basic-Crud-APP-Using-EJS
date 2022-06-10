@@ -37,7 +37,7 @@ exports.Register = async (req, res) => {
     const { name, email, password } = req.body
     console.log(password)
     const findUser = UserSchema.findOne({ email })
-    if (!findUser) {
+    if (findUser.length !=0 ) {
         const result = await UserSchema.create({ name: name.trim(), email: email.trim(), password: password });
         console.log(result)
         if (result) {

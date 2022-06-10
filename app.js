@@ -73,5 +73,5 @@ app.use(UserRoutes)
 
 // Runnig server with static port 6000 (you can change it if 6000 is not working)
 app.listen(9000, () => {
-    console.log(`Server connected to port 6000...`)
+    console.log(`Server connected to port 9000...`)
 })
