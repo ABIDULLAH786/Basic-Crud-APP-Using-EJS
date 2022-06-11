@@ -11,6 +11,9 @@ const fileUpload = require("express-fileupload");
 const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
+const uniqueValidator = require('mongoose-unique-validator');
+const ProductSchema = require("./models/ProductModel");
+const UserSchema = require("./models/UserModel");
 app.use(session({
 
     secret: "Shh, its a secret!",
@@ -20,23 +23,27 @@ app.use(session({
 }));
 
 global.isCurrentlySignIn = null;
-
 // this route is set just to test the session is working or not
-app.get('/test', function (req, res) {
+app.get('/test', async function (req, res) {
 
-    if (req.session.page_views) {
-        req.session.page_views++;
-        res.send("You visited this page " + req.session.page_views + " times with session ID:" + req.sessionID);
+    const result = await UserSchema.find();  
+    if (result.length != 0) {
+        console.log(result);
+        // req.session.page_views++;
+        // res.send("You visited this page " + req.session.page_views + " times with session ID:" + req.sessionID);
     } else {
-        req.session.page_views = 1;
-        res.send("Welcome to this page for the first time!");
+
+        // req.session.page_views = 1;
+        // res.send("Welcome to this page for the first time!");
     }
 });
 
 app.use(express.static(path.join(__dirname, "public")))
 
 app.use(express.json());
+
 app.use(fileUpload());
+
 app.use(flash())
 
 app.use(bodyParser.json());
@@ -49,6 +56,9 @@ app.use(
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
+// ProductSchema.plugin(uniqueValidator);
+// UserSchema.plugin(uniqueValidator);
+
 // importing the database conneciton cuntion and excuting it 
 const connectDatabse = require("./config/connection")
 connectDatabse();
@@ -56,6 +66,7 @@ connectDatabse();
 const ProductRoutes = require("./routes/ProductRoutes")
 const UserRoutes = require("./routes/UserRoutes");
 const setUserLoggedIn = require("./middlewares/setUserLoggedIn");
+const ProductModel = require("./models/ProductModel");
 // app.use("*",setUserLoggedIn)
 
 app.use(ProductRoutes)

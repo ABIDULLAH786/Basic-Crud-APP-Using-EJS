@@ -7,7 +7,8 @@ const UserSchema = mongoose.Schema({
     },
     email:{
         type: String,
-        required:[true, "Please Enter Email"]
+        required:[true, "Please Enter Email"],
+        unique: true,
     },
     password:{
         type: String,
@@ -21,5 +22,6 @@ UserSchema.pre("save", function(next){
         next();
     })
 });
-
+const uniqueValidator = require('mongoose-unique-validator');
+UserSchema.plugin(uniqueValidator);
 module.exports = mongoose.model("users",UserSchema)

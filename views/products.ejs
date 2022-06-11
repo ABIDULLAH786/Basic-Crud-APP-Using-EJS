@@ -30,18 +30,19 @@
                             </h4>
                         </div>
                         <%if(data[i].image){%>
-                            <div class="card-body text-center">
-                                <img src="/img/<%=data[i].image%>" load="lazy" width="200px" alt="img">
-                            </div>
-                            <%}%>
-                                <div class="card-footer d-flex justify-content-around">
-                                    <a href="/delete/<%=data[i]._id%>">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </a>
-                                    <a href="/user/<%=data[i]._id%>">
-                                        <button class="btn btn-info"> Update</button>
-                                    </a>
-                                </div>
+                        <div class="card-body text-center">
+                            <img src="/img/<%=data[i].image%>" load="lazy" width="200px" alt="img">
+                        </div>
+                        <%}%>
+                        <div class="mx-3 mb-2">Created By: <%=data[i].userId ? data[i].userId.name: "N/A"%></div>
+                        <div class="card-footer d-flex justify-content-around">
+                            <a href="/delete/<%=data[i]._id%>">
+                                <button class="btn btn-danger">Delete</button>
+                            </a>
+                            <a href="/user/<%=data[i]._id%>">
+                                <button class="btn btn-info"> Update</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <%}%>

@@ -8,7 +8,7 @@ exports.home = async (req, res) => {
     // res.sendFile(__dirname + '/views/form.html')
 }
 exports.getAllProducts = async (req, res) => {
-    const data = await ProductSchema.find();
+    const data = await ProductSchema.find().populate("userId");
     res.render("products", { data: data })
     // console.log(data)
     // res.sendFile(__dirname + '/views/form.html')
@@ -71,8 +71,8 @@ exports.addNewProduct = async (req, res) => {
     // console.log("Img Name: ", req.files.img)
     const { name, description } = req.body;
     const file = req.files.img;
-
-    const result = await ProductSchema.create({ name: name.trim(), description: description.trim(), image: file.name });
+    const userId = req.session.uid;
+    const result = await ProductSchema.create({ userId:userId,name: name.trim(), description: description.trim(), image: file.name });
 
     file.mv(`./public/img/` + file.name, async (e) => {
         if (e)

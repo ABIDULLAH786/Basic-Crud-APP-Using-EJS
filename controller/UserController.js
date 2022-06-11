@@ -75,15 +75,15 @@ exports.Register = async (req, res) => {
 }
 exports.RegisterPage = async (req, res) => {
     const data = req.flash("data")[0];
-    let username = "";
+    let email = "";
 
     if (data) {
-        username = data.username;
+        email = data.email;
     }
 
     res.render("signup", {
         errors: req.flash("validationErrors"),
-        username,
+        email,
     });
 }
 exports.LoginPage = async (req, res) => {
